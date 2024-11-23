@@ -23,7 +23,7 @@
     ],
     "require": {
         "php": "^8.2",
-        "laravel/framework": "^11.33"
+        "laravel/framework": "^11.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.4",
@@ -33,20 +33,8 @@
     },
     "scripts": {
         "test": "./vendor/bin/phpunit",
-        "post-autoload-dump": [
-            "@clear",
-            "@prepare"
-        ],
-        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
-        "prepare": "@php vendor/bin/testbench package:discover --ansi",
-        "build": "@php vendor/bin/testbench workbench:build --ansi",
-        "serve": [
-            "Composer\\Config::disableProcessTimeout",
-            "@build",
-            "@php vendor/bin/testbench serve --ansi"
-        ],
         "lint": [
-            "@php vendor/bin/pint --ansi"
+            "vendor/bin/pint"
         ]
     }
 }
