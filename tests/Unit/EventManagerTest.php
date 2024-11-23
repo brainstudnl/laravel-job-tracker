@@ -1,6 +1,6 @@
 <?php
 
-namespace Brainstud\LaravelJobTracker\Tests\Feature;
+namespace Brainstud\LaravelJobTracker\Tests\Unit;
 
 use Brainstud\LaravelJobTracker\JobStatusValue;
 use Brainstud\LaravelJobTracker\Tests\Data\Label;
