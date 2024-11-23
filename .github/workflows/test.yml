@@ -23,6 +23,7 @@ jobs:
           version: 9.6
           bootstrap: vendor/autoload.php
           configuration: ./phpunit.xml
+          args: --debug
 
   lint:
     runs-on: ubuntu-latest
