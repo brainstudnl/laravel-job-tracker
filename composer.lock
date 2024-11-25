@@ -4,8 +4,44 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "812a5b8c4e92ae12345922c51c5bea83",
+    "content-hash": "e62f0a6056b71f9f195e6b40515f765f",
     "packages": [
+        {
+            "name": "brainstud/has-identifier",
+            "version": "v2.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/brainstudnl/has-identifier.git",
+                "reference": "d208d0b52299c7f10f83cd338da2ee658c6ad500"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/brainstudnl/has-identifier/zipball/d208d0b52299c7f10f83cd338da2ee658c6ad500",
+                "reference": "d208d0b52299c7f10f83cd338da2ee658c6ad500",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^8.0 || ^9.0 || ^10.0 || ^11.0",
+                "php": "^7.4 || ^8.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.23",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Brainstud\\HasIdentifier\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Add a HasIdentifier to the model to take care of generating the identifier",
+            "support": {
+                "issues": "https://github.com/brainstudnl/has-identifier/issues",
+                "source": "https://github.com/brainstudnl/has-identifier/tree/v2.0.6"
+            },
+            "time": "2024-06-04T07:01:58+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.12.1",

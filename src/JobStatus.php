@@ -2,6 +2,7 @@
 
 namespace Brainstud\LaravelJobTracker;
 
+use Brainstud\HasIdentifier\HasIdentifier;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * Brainstud\LaravelJobTracker.
  *
  * @property int $id
+ * @property string $identifier
  * @property string $job_id
  * @property JobStatusValue $status
  * @property string $queue
@@ -24,6 +26,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  */
 class JobStatus extends Model
 {
+    use HasIdentifier;
+
     protected $table = 'job_statuses';
 
     protected $fillable = [

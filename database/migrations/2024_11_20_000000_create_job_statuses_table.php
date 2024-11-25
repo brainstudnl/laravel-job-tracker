@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('job_statuses', function (Blueprint $table) {
             $table->id();
+            $table->char('identifier', 36);
             $table->string('job_id')->index()->nullable();
 
             $table->enum('status', ['pending', 'processing', 'success', 'failed'])->default('pending');
