@@ -2,7 +2,7 @@
 
 namespace Brainstud\LaravelJobTracker\EventManagers;
 
-use Brainstud\LaravelJobTracker\JobStatusValue;
+use Brainstud\LaravelJobTracker\JobStateValue;
 use Illuminate\Queue\Events\JobExceptionOccurred;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Queue\Events\JobProcessed;
@@ -19,7 +19,7 @@ class DefaultEventManager extends EventManager
     {
         if (! $event->job->hasFailed()) {
             $this->getUpdater()->update($event, [
-                'status' => JobStatusValue::SUCCESS,
+                'status' => JobStateValue::SUCCESS,
             ]);
         }
     }
@@ -27,14 +27,14 @@ class DefaultEventManager extends EventManager
     public function failing(JobFailed $event): void
     {
         $this->getUpdater()->update($event, [
-            'status' => JobStatusValue::FAILED,
+            'status' => JobStateValue::FAILED,
         ]);
     }
 
     public function exceptionOccurred(JobExceptionOccurred $event): void
     {
         $this->getUpdater()->update($event, [
-            'status' => JobStatusValue::FAILED,
+            'status' => JobStateValue::FAILED,
         ]);
     }
 }

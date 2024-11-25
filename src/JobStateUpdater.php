@@ -8,7 +8,7 @@ use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Support\Facades\Log;
 
-class JobStatusUpdater
+class JobStateUpdater
 {
     public function update($job, array $data)
     {
@@ -23,18 +23,18 @@ class JobStatusUpdater
         JobProcessing|JobProcessed|JobFailed|JobExceptionOccurred $event, array $data
     ) {
         $job = $this->parseJob($event);
-        $jobStatus = $this->getJobStatus($job);
+        $jobState = $this->getJobState($job);
 
-        if (! $jobStatus) {
+        if (! $jobState) {
             return;
         }
 
-        $jobStatus->update($data);
+        $jobState->update($data);
     }
 
     protected function updateJob($job, array $data)
     {
-        $job->jobStatus->update($data);
+        $job->jobState->update($data);
     }
 
     /**
@@ -55,7 +55,7 @@ class JobStatusUpdater
         }
     }
 
-    protected function getJobStatusId($job)
+    protected function getJobStateId($job)
     {
         try {
             if ($job instanceof TrackableJob || method_exists($job, 'getJobStatusId')) {
@@ -71,12 +71,12 @@ class JobStatusUpdater
     }
 
     /**
-     * Retrieve the `JobStatus` from a Job
+     * Retrieve the `JobState` from a Job
      */
-    protected function getJobStatus($job): ?JobStatus
+    protected function getJobState($job): ?JobState
     {
-        if (isset($job->jobStatus) && $job->jobStatus instanceof JobStatus) {
-            return $job->jobStatus;
+        if (isset($job->jobState) && $job->jobState instanceof JobState) {
+            return $job->jobState;
         }
 
         return null;

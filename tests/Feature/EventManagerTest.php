@@ -2,7 +2,7 @@
 
 namespace Brainstud\LaravelJobTracker\Tests\Feature;
 
-use Brainstud\LaravelJobTracker\JobStatusValue;
+use Brainstud\LaravelJobTracker\JobStateValue;
 use Brainstud\LaravelJobTracker\Tests\Data\Label;
 use Brainstud\LaravelJobTracker\Tests\Data\TestJob;
 use Brainstud\LaravelJobTracker\Tests\TestCase;
@@ -23,10 +23,10 @@ class EventManagerTest extends TestCase
             ]);
         }, \Exception::class);
 
-        $this->assertDatabaseHas('job_statuses', [
+        $this->assertDatabaseHas('job_states', [
             'subject_type' => $label->getMorphClass(),
             'subject_id' => $label->id,
-            'status' => JobStatusValue::FAILED,
+            'status' => JobStateValue::FAILED,
         ]);
     }
 }

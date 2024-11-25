@@ -10,7 +10,7 @@ use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Queue\QueueManager;
 use Illuminate\Support\ServiceProvider;
 
-class LaravelJobStatusServiceProvider extends ServiceProvider
+class LaravelJobTrackerServiceProvider extends ServiceProvider
 {
     public function boot()
     {

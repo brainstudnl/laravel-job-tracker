@@ -2,7 +2,7 @@
 
 namespace Brainstud\LaravelJobTracker\Tests\Feature;
 
-use Brainstud\LaravelJobTracker\JobStatusValue;
+use Brainstud\LaravelJobTracker\JobStateValue;
 use Brainstud\LaravelJobTracker\Tests\Data\Label;
 use Brainstud\LaravelJobTracker\Tests\Data\NoTrackTestJob;
 use Brainstud\LaravelJobTracker\Tests\TestCase;
@@ -13,10 +13,10 @@ class TrackableTest extends TestCase
     {
         [, $label] = $this->createBaseJob();
 
-        $this->assertDatabaseHas('job_statuses', [
+        $this->assertDatabaseHas('job_states', [
             'subject_type' => $label->getMorphClass(),
             'subject_id' => $label->id,
-            'status' => JobStatusValue::PENDING,
+            'status' => JobStateValue::PENDING,
         ]);
     }
 
@@ -26,10 +26,10 @@ class TrackableTest extends TestCase
 
         $job->withManualTracking()->handle();
 
-        $this->assertDatabaseHas('job_statuses', [
+        $this->assertDatabaseHas('job_states', [
             'subject_type' => $label->getMorphClass(),
             'subject_id' => $label->id,
-            'status' => JobStatusValue::SUCCESS,
+            'status' => JobStateValue::SUCCESS,
         ]);
     }
 
@@ -45,10 +45,10 @@ class TrackableTest extends TestCase
             \Exception::class
         );
 
-        $this->assertDatabaseHas('job_statuses', [
+        $this->assertDatabaseHas('job_states', [
             'subject_type' => $label->getMorphClass(),
             'subject_id' => $label->id,
-            'status' => JobStatusValue::FAILED,
+            'status' => JobStateValue::FAILED,
         ]);
     }
 
@@ -59,6 +59,6 @@ class TrackableTest extends TestCase
 
         $job->handle();
 
-        $this->assertDatabaseEmpty('job_statuses');
+        $this->assertDatabaseEmpty('job_states');
     }
 }

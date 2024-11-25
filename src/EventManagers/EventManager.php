@@ -2,7 +2,7 @@
 
 namespace Brainstud\LaravelJobTracker\EventManagers;
 
-use Brainstud\LaravelJobTracker\JobStatusUpdater;
+use Brainstud\LaravelJobTracker\JobStateUpdater;
 use Illuminate\Queue\Events\JobExceptionOccurred;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Queue\Events\JobProcessed;
@@ -18,15 +18,15 @@ abstract class EventManager
 
     abstract public function exceptionOccurred(JobExceptionOccurred $event): void;
 
-    private JobStatusUpdater $updater;
+    private JobStateUpdater $updater;
 
-    public function __construct(JobStatusUpdater $updater)
+    public function __construct(JobStateUpdater $updater)
     {
         $this->updater = $updater;
     }
 
     /**
-     * @return JobStatusUpdater
+     * @return JobStateUpdater
      */
     protected function getUpdater()
     {

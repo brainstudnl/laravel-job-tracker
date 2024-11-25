@@ -2,37 +2,37 @@
 
 namespace Brainstud\LaravelJobTracker\Tests\Feature;
 
-use Brainstud\LaravelJobTracker\JobStatusUpdater;
-use Brainstud\LaravelJobTracker\JobStatusValue;
+use Brainstud\LaravelJobTracker\JobStateUpdater;
+use Brainstud\LaravelJobTracker\JobStateValue;
 use Brainstud\LaravelJobTracker\Tests\Data\Label;
 use Brainstud\LaravelJobTracker\Tests\Data\NoTrackTestJob;
 use Brainstud\LaravelJobTracker\Tests\TestCase;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Support\Facades\Artisan;
 
-class JobStatusUpdaterTest extends TestCase
+class JobStateUpdaterTest extends TestCase
 {
     public function test_update_trackable_job()
     {
-        /** @var JobStatusUpdater $updater */
-        $updater = app(JobStatusUpdater::class);
+        /** @var JobStateUpdater $updater */
+        $updater = app(JobStateUpdater::class);
 
         [$job, $label] = $this->createBaseJob();
 
-        $this->assertDatabaseHas('job_statuses', [
+        $this->assertDatabaseHas('job_states', [
             'subject_type' => $label->getMorphClass(),
             'subject_id' => $label->id,
-            'status' => JobStatusValue::PENDING,
+            'status' => JobStateValue::PENDING,
         ]);
 
         $updater->update($job, [
-            'status' => JobStatusValue::SUCCESS,
+            'status' => JobStateValue::SUCCESS,
         ]);
 
-        $this->assertDatabaseHas('job_statuses', [
+        $this->assertDatabaseHas('job_states', [
             'subject_type' => $label->getMorphClass(),
             'subject_id' => $label->id,
-            'status' => JobStatusValue::SUCCESS,
+            'status' => JobStateValue::SUCCESS,
         ]);
     }
 
@@ -40,10 +40,10 @@ class JobStatusUpdaterTest extends TestCase
     {
         [$job, $label] = $this->createBaseJob();
 
-        $this->assertDatabaseHas('job_statuses', [
+        $this->assertDatabaseHas('job_states', [
             'subject_type' => $label->getMorphClass(),
             'subject_id' => $label->id,
-            'status' => JobStatusValue::PENDING,
+            'status' => JobStateValue::PENDING,
         ]);
 
         app(Dispatcher::class)->dispatch($job);
@@ -52,10 +52,10 @@ class JobStatusUpdaterTest extends TestCase
             '--once' => 1,
         ]);
 
-        $this->assertDatabaseHas('job_statuses', [
+        $this->assertDatabaseHas('job_states', [
             'subject_type' => $label->getMorphClass(),
             'subject_id' => $label->id,
-            'status' => JobStatusValue::SUCCESS,
+            'status' => JobStateValue::SUCCESS,
         ]);
     }
 
@@ -64,10 +64,10 @@ class JobStatusUpdaterTest extends TestCase
         [$job, $label] = $this->createBaseJob();
         $job = $job->withException();
 
-        $this->assertDatabaseHas('job_statuses', [
+        $this->assertDatabaseHas('job_states', [
             'subject_type' => $label->getMorphClass(),
             'subject_id' => $label->id,
-            'status' => JobStatusValue::PENDING,
+            'status' => JobStateValue::PENDING,
         ]);
 
         app(Dispatcher::class)->dispatch($job);
@@ -76,10 +76,10 @@ class JobStatusUpdaterTest extends TestCase
             '--once' => 1,
         ]);
 
-        $this->assertDatabaseHas('job_statuses', [
+        $this->assertDatabaseHas('job_states', [
             'subject_type' => $label->getMorphClass(),
             'subject_id' => $label->id,
-            'status' => JobStatusValue::FAILED,
+            'status' => JobStateValue::FAILED,
         ]);
     }
 
@@ -88,7 +88,7 @@ class JobStatusUpdaterTest extends TestCase
         $label = Label::factory()->create();
         $job = (new NoTrackTestJob($label))->withFakeQueueInteractions();
 
-        $this->assertDatabaseEmpty('job_statuses');
+        $this->assertDatabaseEmpty('job_states');
 
         app(Dispatcher::class)->dispatch($job);
 
@@ -96,6 +96,6 @@ class JobStatusUpdaterTest extends TestCase
             '--once' => 1,
         ]);
 
-        $this->assertDatabaseEmpty('job_statuses');
+        $this->assertDatabaseEmpty('job_states');
     }
 }

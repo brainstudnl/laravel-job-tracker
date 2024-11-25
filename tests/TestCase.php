@@ -2,7 +2,7 @@
 
 namespace Brainstud\LaravelJobTracker\Tests;
 
-use Brainstud\LaravelJobTracker\LaravelJobStatusServiceProvider;
+use Brainstud\LaravelJobTracker\LaravelJobTrackerServiceProvider;
 use Brainstud\LaravelJobTracker\Tests\Data\Label;
 use Brainstud\LaravelJobTracker\Tests\Data\TestJob;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -36,7 +36,7 @@ class TestCase extends OrchestraTestCase
     protected function getPackageProviders($app)
     {
         return [
-            LaravelJobStatusServiceProvider::class,
+            LaravelJobTrackerServiceProvider::class,
         ];
     }
 

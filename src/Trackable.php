@@ -6,15 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 trait Trackable
 {
-    /** @var int */
-    protected $statusId;
+    protected int $statusId;
 
-    public JobStatus $jobStatus;
+    public JobState $jobState;
 
     /**
      * Start tracking the Job.
      *
-     * Creates a `JobStatus` model in the database and links the given subject.
+     * Creates a `JobState` model in the database and links the given subject.
      */
     protected function startTracking(Model $subject): void
     {
@@ -22,11 +21,11 @@ trait Trackable
             return;
         }
         // Create the model.
-        $this->jobStatus = new JobStatus([
-            'status' => JobStatusValue::PENDING,
+        $this->jobState = new JobState([
+            'status' => JobStateValue::PENDING,
         ]);
-        $this->jobStatus->subject()->associate($subject);
-        $this->jobStatus->save();
+        $this->jobState->subject()->associate($subject);
+        $this->jobState->save();
     }
 
     /**
@@ -35,9 +34,9 @@ trait Trackable
      * This method ends the job tracking. It updates the model
      * in the database with the appropriate status.
      *
-     * @param  \Brainstud\LaravelJobTracker\JobStatusValue  $status  The status that should be saved.
+     * @param  \Brainstud\LaravelJobTracker\JobStateValue  $status  The status that should be saved.
      */
-    protected function endTracking(?JobStatusValue $status = JobStatusValue::SUCCESS): void
+    protected function endTracking(?JobStateValue $status = JobStateValue::SUCCESS): void
     {
         $this->updateStatus($status);
     }
@@ -50,20 +49,20 @@ trait Trackable
      */
     protected function failTracking(): void
     {
-        $this->updateStatus(JobStatusValue::FAILED);
+        $this->updateStatus(JobStateValue::FAILED);
     }
 
     /**
      * Update the job status.
      *
-     * @param  \Brainstud\LaravelJobTracker\JobStatusValue  $status  The status that should be saved.
+     * @param  \Brainstud\LaravelJobTracker\JobStateValue  $status  The status that should be saved.
      */
-    protected function updateStatus(JobStatusValue $status): void
+    protected function updateStatus(JobStateValue $status): void
     {
-        $this->jobStatus->update(['status' => $status]);
+        $this->jobState->update(['status' => $status]);
     }
 
-    public function getJobStatusId()
+    public function getJobStateId()
     {
         return $this->statusId;
     }

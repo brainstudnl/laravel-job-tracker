@@ -2,7 +2,7 @@
 
 namespace Brainstud\LaravelJobTracker;
 
-enum JobStatusValue: string
+enum JobStateValue: string
 {
     case PENDING = 'pending';
     case PROCESSING = 'processing';

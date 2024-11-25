@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property int $id
  * @property string $identifier
  * @property string $job_id
- * @property JobStatusValue $status
+ * @property JobStateValue $status
  * @property string $queue
  * @property Model $subject
  * @property int $subject_id
@@ -24,11 +24,9 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  *
  * @mixin \Eloquent
  */
-class JobStatus extends Model
+class JobState extends Model
 {
     use HasIdentifier;
-
-    protected $table = 'job_statuses';
 
     protected $fillable = [
         'status',
@@ -40,7 +38,7 @@ class JobStatus extends Model
     protected function casts()
     {
         return [
-            'status' => JobStatusValue::class,
+            'status' => JobStateValue::class,
         ];
     }
 
