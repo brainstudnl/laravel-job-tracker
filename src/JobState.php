@@ -4,6 +4,7 @@ namespace Brainstud\LaravelJobTracker;
 
 use Brainstud\HasIdentifier\HasIdentifier;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
@@ -26,6 +27,9 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  */
 class JobState extends Model
 {
+    /** @use HasFactory<JobStateFactory> */
+    use HasFactory;
+
     use HasIdentifier;
 
     protected $fillable = [
@@ -34,6 +38,11 @@ class JobState extends Model
         'job',
         'job_id,',
     ];
+
+    protected static function newFactory(): JobStateFactory
+    {
+        return JobStateFactory::new();
+    }
 
     protected function casts()
     {
