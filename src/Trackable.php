@@ -53,6 +53,18 @@ trait Trackable
     }
 
     /**
+     * Fail the job with a given exception
+     *
+     * Makes sure the job state will be JobStateValue::FAILED and the given exception
+     * is added to the database row.
+     */
+    protected function failWith(\Throwable $exception): void
+    {
+        $this->jobState->update(['exception' => JobState::convertException($exception)]);
+        $this->failTracking();
+    }
+
+    /**
      * Update the job status.
      *
      * @param  \Brainstud\LaravelJobTracker\JobStateValue  $status  The status that should be saved.

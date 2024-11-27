@@ -37,6 +37,7 @@ class JobState extends Model
         'queue',
         'job',
         'job_id,',
+        'exception',
     ];
 
     protected static function newFactory(): JobStateFactory
@@ -48,11 +49,23 @@ class JobState extends Model
     {
         return [
             'status' => JobStateValue::class,
+            'exception' => 'array',
         ];
     }
 
     public function subject(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public static function convertException(\Throwable $exception): array
+    {
+        return [
+            'message' => $exception->getMessage(),
+            'code' => $exception->getCode(),
+            'file' => $exception->getFile(),
+            'line' => $exception->getLine(),
+            'trace' => $exception->getTraceAsString(),
+        ];
     }
 }

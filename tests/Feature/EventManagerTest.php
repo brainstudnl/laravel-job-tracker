@@ -15,13 +15,11 @@ class EventManagerTest extends TestCase
         $label = Label::factory()->create();
         $job = (new TestJob($label))->withException();
 
-        $this->callWithException(function () use ($job) {
-            dispatch($job);
+        dispatch($job);
 
-            Artisan::call('queue:work', [
-                '--once' => 1,
-            ]);
-        }, \Exception::class);
+        Artisan::call('queue:work', [
+            '--once' => 1,
+        ]);
 
         $this->assertDatabaseHas('job_states', [
             'subject_type' => $label->getMorphClass(),

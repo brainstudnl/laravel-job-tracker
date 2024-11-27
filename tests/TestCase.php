@@ -40,15 +40,6 @@ class TestCase extends OrchestraTestCase
         ];
     }
 
-    protected function callWithException(callable $fn, string $exceptionClass)
-    {
-        try {
-            $fn();
-        } catch (\Exception $e) {
-            $this->assertEquals($exceptionClass, $e::class);
-        }
-    }
-
     /**
      * Create a base job for a label
      *

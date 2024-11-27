@@ -6,6 +6,7 @@ use Brainstud\LaravelJobTracker\JobStateValue;
 use Brainstud\LaravelJobTracker\Tests\Data\Label;
 use Brainstud\LaravelJobTracker\Tests\Data\NoTrackTestJob;
 use Brainstud\LaravelJobTracker\Tests\TestCase;
+use Illuminate\Support\Facades\Artisan;
 
 class TrackableTest extends TestCase
 {
@@ -33,17 +34,32 @@ class TrackableTest extends TestCase
         ]);
     }
 
-    public function test_job_handle_with_exception(): void
+    public function test_job_handle_with_exception_manual(): void
     {
         [$job, $label] = $this->createBaseJob();
 
-        $this->callWithException(
-            fn () => $job
-                ->withException()
+        try {
+            $job->withException()
                 ->withManualTracking()
-                ->handle(),
-            \Exception::class
-        );
+                ->handle();
+        } catch (\Exception $exception) {
+            $this->assertDatabaseHas('job_states', [
+                'subject_type' => $label->getMorphClass(),
+                'subject_id' => $label->id,
+                'status' => JobStateValue::FAILED,
+            ]);
+        }
+    }
+
+    public function test_job_handle_with_exception_events(): void
+    {
+        [$job, $label] = $this->createBaseJob();
+
+        dispatch($job->withException());
+
+        Artisan::call('queue:work', [
+            '--once' => 1,
+        ]);
 
         $this->assertDatabaseHas('job_states', [
             'subject_type' => $label->getMorphClass(),
