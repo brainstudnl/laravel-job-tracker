@@ -6,3 +6,4 @@
 .phpactor.json
 
 .phpunit.result.cache
+composer.lock
