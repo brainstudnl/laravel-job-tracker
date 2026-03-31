@@ -61,6 +61,7 @@ class JobState extends Model
     public static function convertException(\Throwable $exception): array
     {
         return [
+            'type' => get_class($exception),
             'message' => $exception->getMessage(),
             'code' => $exception->getCode(),
             'file' => $exception->getFile(),

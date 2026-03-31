@@ -34,7 +34,7 @@ trait Trackable
      * This method ends the job tracking. It updates the model
      * in the database with the appropriate status.
      *
-     * @param  \Brainstud\LaravelJobTracker\JobStateValue  $status  The status that should be saved.
+     * @param  JobStateValue  $status  The status that should be saved.
      */
     protected function endTracking(?JobStateValue $status = JobStateValue::SUCCESS): void
     {
@@ -67,7 +67,7 @@ trait Trackable
     /**
      * Update the job status.
      *
-     * @param  \Brainstud\LaravelJobTracker\JobStateValue  $status  The status that should be saved.
+     * @param  JobStateValue  $status  The status that should be saved.
      */
     protected function updateStatus(JobStateValue $status): void
     {
