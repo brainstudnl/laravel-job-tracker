@@ -1,6 +1,9 @@
 <?php
 
+use Brainstud\LaravelJobTracker\EventManagers\DefaultEventManager;
+use Brainstud\LaravelJobTracker\JobState;
+
 return [
-    'model' => \Brainstud\LaravelJobTracker\JobState::class,
-    'event_manager' => \Brainstud\LaravelJobTracker\EventManagers\DefaultEventManager::class,
+    'model' => JobState::class,
+    'event_manager' => DefaultEventManager::class,
 ];
